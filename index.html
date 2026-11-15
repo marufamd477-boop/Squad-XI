@@ -4,15 +4,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>CrownBoard - Chess & Checkers</title>
 
   <!-- Google Analytics GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-2QBJH4J3P1"></script>
+
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
     gtag('js', new Date());
-    gtag('config', 'G-2QBJH4J3P1');
+
+    gtag('config', 'G-2QBJH4J3P1', {
+      send_page_view: false
+    });
   </script>
 </head>
 
@@ -25,11 +34,28 @@
   </a>
 
   <script>
-    setTimeout(() => {
-      window.location.replace(
-        "https://play.google.com/store/apps/details?id=com.tap.crownboard"
-      );
-    }, 1000);
+    const destination =
+      "https://play.google.com/store/apps/details?id=com.tap.crownboard";
+
+    let redirected = false;
+
+    function openStore() {
+      if (redirected) return;
+      redirected = true;
+      window.location.replace(destination);
+    }
+
+    // Record one page view.
+    gtag('event', 'page_view', {
+      send_to: 'G-2QBJH4J3P1',
+      page_title: 'CrownBoard - Chess & Checkers',
+      page_location: window.location.href,
+      event_callback: openStore,
+      event_timeout: 1000
+    });
+
+    // Redirect after at most 1 second.
+    setTimeout(openStore, 1000);
   </script>
 </body>
 </html>
